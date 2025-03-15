@@ -156,7 +156,7 @@ module Anthropic
       return unless env&.status != 200
 
       raise_error = Faraday::Response::RaiseError.new
-      raise_error.on_complete(env.merge(body: try_parse_json(chunk)))
+      raise_error.on_complete((env || {}).merge(body: try_parse_json(chunk)))
     end
 
     def conn(multipart: false)
